@@ -34,7 +34,7 @@
             overflow-y: auto;
             margin-bottom: 20px;
             min-height: 100px;
-            max-height: 70vh;
+            max-height: 80vh;
         }
         .message {
             margin: 10px 0;
@@ -80,6 +80,15 @@
             background-color: #bbb;
             cursor: not-allowed;
         }
+        #refresh-btn {
+            margin-top: 20px;
+            padding: 10px 15px;
+            border: none;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -91,12 +100,14 @@
             <textarea id="user-input" placeholder="输入你的消息..." rows="1"></textarea>
             <button id="send-btn" disabled>发送</button>
         </div>
+        <button id="refresh-btn">刷新</button>
     </div>
 
     <script>
         const messagesContainer = document.getElementById('messages');
         const userInput = document.getElementById('user-input');
         const sendBtn = document.getElementById('send-btn');
+        const refreshBtn = document.getElementById('refresh-btn');
 
         let messages = [
             {"role": "system", "content": "你是 玖数 人工智能助手。你要擅长中文和英文的对话。你会为用户提供安全、有效、有帮助、准确的回答。玖数 为专有名词，不可翻译成其他语言。"}
@@ -115,6 +126,10 @@
                 e.preventDefault();
                 sendMessage();
             }
+        });
+
+        refreshBtn.addEventListener('click', () => {
+            location.reload();
         });
 
         function sendMessage() {
