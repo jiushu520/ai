@@ -34,7 +34,7 @@
             overflow-y: auto;
             margin-bottom: 20px;
             min-height: 100px;
-            max-height: 70vh; /* 添加一个最大高度，防止内容过多时撑破页面 */
+            max-height: 70vh;
         }
         .message {
             margin: 10px 0;
@@ -122,17 +122,17 @@
             if (userMessage === '') return;
 
             // 显示用户消息
-            displayMessage("我：" + userMessage, 'user-message');
+            displayMessage(`我：${userMessage}`, 'user-message').then(() => {
+                // 将用户消息添加到消息列表
+                messages.push({"role": "user", "content": userMessage});
 
-            // 将用户消息添加到消息列表
-            messages.push({"role": "user", "content": userMessage});
+                // 清空输入框
+                userInput.value = '';
+                sendBtn.disabled = true;
 
-            // 清空输入框
-            userInput.value = '';
-            sendBtn.disabled = true;
-
-            // 调用 OpenAI API 获取回复
-            getAssistantReply();
+                // 调用 OpenAI API 获取回复
+                getAssistantReply();
+            });
         }
 
         async function getAssistantReply() {
@@ -153,28 +153,31 @@
             const assistantMessage = data.choices[0].message.content;
 
             // 显示 AI 回复逐步输出并在最后渲染公式
-            displayMessageStepByStep("玖数：" + assistantMessage, 'assistant-message');
+            displayMessageStepByStep(`玖数：${assistantMessage}`, 'assistant-message');
         }
 
         function displayMessage(message, className) {
-            const messageElement = document.createElement('div');
-            messageElement.className = `message ${className}`;
-            const textElement = document.createElement('span');
-            textElement.textContent = message;
+            return new Promise((resolve) => {
+                const messageElement = document.createElement('div');
+                messageElement.className = `message ${className}`;
+                const textElement = document.createElement('span');
+                textElement.innerHTML = message;
 
-            const timeElement = document.createElement('span');
-            timeElement.className = 'message-time';
-            timeElement.textContent = new Date().toLocaleTimeString();
+                const timeElement = document.createElement('span');
+                timeElement.className = 'message-time';
+                timeElement.textContent = new Date().toLocaleTimeString();
 
-            messageElement.appendChild(textElement);
-            messageElement.appendChild(timeElement);
+                messageElement.appendChild(textElement);
+                messageElement.appendChild(timeElement);
 
-            messagesContainer.appendChild(messageElement);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
-            // 重新渲染 LaTeX 数学公式
-            MathJax.typesetPromise([messageElement]).then(() => {
+                messagesContainer.appendChild(messageElement);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                // 重新渲染 LaTeX 数学公式
+                MathJax.typesetPromise([messageElement]).then(() => {
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    resolve();
+                });
             });
         }
 
