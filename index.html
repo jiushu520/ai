@@ -130,17 +130,30 @@
 
         refreshBtn.addEventListener('click', () => {
             location.reload();
-        });
+        })
 
-        function selectApiKey() {
-            const seconds = new Date().getSeconds();
-            const keyIndex = seconds % 2; // 计算除以 2 的余数
-            if (keyIndex === 0) {
-                return 'sk-f7s6H8XxvgXBGNbQ9HkRztr2IyUCmeFMyi6fqApGVM1GQK1g';
-            } else {
-                return 'sk-oufgEIbq22Qrzy3M8pyr3J4h1g3r9iS8kiKg3DldShVXyUBp';
-            }
-        }
+
+function selectApiKey() {
+    const seconds = new Date().getSeconds();
+    const keyIndex = seconds % 4; // 计算除以 3 的余数
+    switch (keyIndex) {
+        case 0:
+            return 'sk-f7s6H8XxvgXBGNbQ9HkRztr2IyUCmeFMyi6fqApGVM1GQK1g'; // 余数为 0 时使用这个密钥
+        case 1:
+            return 'sk-oufgEIbq22Qrzy3M8pyr3J4h1g3r9iS8kiKg3DldShVXyUBp'; // 余数为 1 时使用这个密钥
+        case 2:
+            return 'sk-wlOJTExVTUxg4rBoqJ97ShXGLIr6HfcnkLkjc469AvBB9MIZ '; // 余数为 2 时使用这个密钥
+
+        case 3:
+            return 'sk-a5jAKdoTj5HqJUeROBozRzc0GfWf3NzwaOaaoCzP8VsyhICV '; // 余数为 2 时使用这个密钥
+
+
+        default:
+            return 'sk-f7s6H8XxvgXBGNbQ9HkRztr2IyUCmeFMyi6fqApGVM1GQK1g'; // 默认使用第一个密钥
+    }
+}
+
+
 
         function sendMessage() {
             const userMessage = userInput.value.trim();
