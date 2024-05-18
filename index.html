@@ -132,30 +132,37 @@
             location.reload();
         });
 
+        function selectApiKey() {
+            const seconds = new Date().getSeconds();
+            const keyIndex = seconds % 2; // 计算除以 2 的余数
+            if (keyIndex === 0) {
+                return 'sk-f7s6H8XxvgXBGNbQ9HkRztr2IyUCmeFMyi6fqApGVM1GQK1g';
+            } else {
+                return 'sk-oufgEIbq22Qrzy3M8pyr3J4h1g3r9iS8kiKg3DldShVXyUBp';
+            }
+        }
+
         function sendMessage() {
             const userMessage = userInput.value.trim();
             if (userMessage === '') return;
 
-            // 显示用户消息
             displayMessage(`我：${userMessage}`, 'user-message').then(() => {
-                // 将用户消息添加到消息列表
                 messages.push({"role": "user", "content": userMessage});
 
-                // 清空输入框
                 userInput.value = '';
                 sendBtn.disabled = true;
 
-                // 调用 OpenAI API 获取回复
                 getAssistantReply();
             });
         }
 
         async function getAssistantReply() {
+            const apiKey = selectApiKey();
             const response = await fetch('https://api.moonshot.cn/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${'sk-f7s6H8XxvgXBGNbQ9HkRztr2IyUCmeFMyi6fqApGVM1GQK1g'}` // 替换为你的 API 密钥
+                    'Authorization': `Bearer ${apiKey}`
                 },
                 body: JSON.stringify({
                     model: "moonshot-v1-8k",
@@ -167,7 +174,6 @@
             const data = await response.json();
             const assistantMessage = data.choices[0].message.content;
 
-            // 显示 AI 回复逐步输出并在最后渲染公式
             displayMessageStepByStep(`玖数：${assistantMessage}`, 'assistant-message');
         }
 
@@ -188,7 +194,6 @@
                 messagesContainer.appendChild(messageElement);
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                // 重新渲染 LaTeX 数学公式
                 MathJax.typesetPromise([messageElement]).then(() => {
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     resolve();
@@ -220,21 +225,18 @@
                     messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 } else {
                     clearInterval(interval);
-                    // 最后再渲染 LaTeX 数学公式
                     MathJax.typesetPromise([messageElement]).then(() => {
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
                     });
                 }
-            }, 50); // 控制逐步输出的速度
+            }, 50);
         }
 
-        // 自动调整主容器宽度
         window.addEventListener('resize', () => {
             const chatContainer = document.getElementById('chat-container');
             chatContainer.style.width = Math.min(window.innerWidth * 0.9, 600) + 'px';
         });
 
-        // 初始化主容器宽度
         document.addEventListener('DOMContentLoaded', () => {
             const chatContainer = document.getElementById('chat-container');
             chatContainer.style.width = Math.min(window.innerWidth * 0.9, 600) + 'px';
