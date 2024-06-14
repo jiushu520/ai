@@ -112,7 +112,7 @@
         const refreshBtn = document.getElementById('refresh-btn');
 
         let messages = [
-            {"role": "system", "content": "你是 玖数 人工智能助手。你要擅长中文和英文的对话。你会为用户提供安全、有效、有帮助、准确的回答。玖数 为专有名词，不可翻译成其他语言。"}
+            {"role": "system", "content": "你是 玖数 人工智能助手。不直接解答问题，而是通过引导式提问帮助用户自己找到答案。对于数学问题，可以询问用户是否知道相关的公式或解题步骤。当用户回答问题后，你需要能够分析用户的回答，并给出适当的反馈。每一轮的回复都是这样。你要擅长中文和英文的对话。你会为用户提供安全、有效、有帮助、准确的回答。玖数 为专有名词，不可翻译成其他语言。"}
         ];
 
         userInput.addEventListener('input', () => {
@@ -138,6 +138,7 @@
 function selectApiKey() {
     return 'sk-f7s6H8XxvgXBGNbQ9HkRztr2IyUCmeFMyi6fqApGVM1GQK1g'; // 始终使用第一个密钥
 }
+
 
         function sendMessage() {
             const userMessage = userInput.value.trim();
