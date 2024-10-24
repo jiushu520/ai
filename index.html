@@ -13,13 +13,13 @@ window.MathJax = {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>玖数求索</title>
+    <title>玖数智谱</title>
     <link rel="icon" href="faviconkimi.ico" type="image/x-icon">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-okaidia.min.css" rel="stylesheet" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
-
+  
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         body {
@@ -178,7 +178,7 @@ window.MathJax = {
 <body>
   
     <div id="chat-container">
-        <h3 id="title">玖数求索</h3>
+        <h3 id="title">玖数智谱有点杠</h3>
         
         <!-- 模型选择下拉菜单 -->
         <div id="model-selection" style="margin-bottom: 10px; text-align: center;">
@@ -201,16 +201,17 @@ window.MathJax = {
     <script>
     // 定义模型列表
     const models = [
-        { name: "gpt-4o", value: "gpt-4o" },
-        { name: "gpt-4o-2024-05-13", value: "gpt-4o-2024-05-13" },
-        { name: "gpt-4o-mini", value: "gpt-4o-mini" },
-        { name: "gpt-4o-mini-2024-07-18", value: "gpt-4o-mini-2024-07-18" },
+    
+        { name: "glm-4-flash",value: "glm-4-flash" },
+
+
+
         // 未来可以在此处添加更多模型
     ];
 
     class ChatApp {
         constructor() {
-            this.API_URL = 'https://open.xiaojingai.com/v1/chat/completions';
+            this.API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
             this.SYSTEM_MESSAGE = {
                 "role": "system",
                 "content": "你是 玖数 人工智能助手。你是一个有20年经验的高级学者，精通数学问题。每个题目一定要多种不同的方法来解答，每种方法给出重要的思维模型。并会给出题涉及的相关知识点。玖数 为专有名词，不可翻译成其他语言。如果提问题和学习数理化学科或是编程无关则不要回复，如果问无关的话题，则以杠精的语气进行回怼！以痛骂的形式进行回击！"
@@ -328,7 +329,7 @@ window.MathJax = {
         selectApiKey() {
             // **重要提示：** 请勿在前端代码中暴露您的API密钥。
             // 推荐的做法是将API请求转发到后端服务器，由后端处理与API的通信。
-            return 'sk-OUhVhJZoEP8wZjKlA4B9Bd865d7d40989f35623eDfA24516';
+            return '046acb99c5a6dd6680049c766c8b454b.Jc1U4euX045uExXU';
         }
 
         async displayMessage(message, className) {
